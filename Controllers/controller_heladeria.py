@@ -9,6 +9,9 @@ heladeria_blueprint = Blueprint('heladeria_bp', __name__, url_prefix="/")
 @heladeria_blueprint.route('/ingredientes')
 @login_required
 def ingredientes():
+    if not current_user.es_admin and not current_user.es_empleado:
+        return render_template('NoAutorizado.html')
+
     heladeria = current_app.config['Heladeria']
     return render_template("ingredientes.html", ingredientes = heladeria.ingredientes)
 
@@ -26,21 +29,27 @@ def productos():
 @heladeria_blueprint.route('/abastecer')
 @login_required
 def abastecer():
-     try:
-         heladeria = current_app.config['Heladeria']
-         heladeria.abastecer_inventario()
-         return render_template('Success.html', mensaje = f"Se abasteció el inventario 📦")
-     except Exception as e:
+    if not current_user.es_admin and not current_user.es_empleado:
+        return render_template('NoAutorizado.html')
+
+    try:
+        heladeria = current_app.config['Heladeria']
+        heladeria.abastecer_inventario()
+        return render_template('Success.html', mensaje = f"Se abasteció el inventario 📦")
+    except Exception as e:
         return render_template('Error.html', mensaje = f"Error {str(e)}")
 
 @heladeria_blueprint.route('/renovarInventario')
 @login_required
 def renovarInventario():
-     try:
-         heladeria = current_app.config['Heladeria']
-         heladeria.renovar_inventario()
-         return render_template('Success.html', mensaje = f"Se renovó el inventario de complementos 🫗")
-     except Exception as e:
+    if not current_user.es_admin and not current_user.es_empleado:
+        return render_template('NoAutorizado.html')
+
+    try:
+        heladeria = current_app.config['Heladeria']
+        heladeria.renovar_inventario()
+        return render_template('Success.html', mensaje = f"Se renovó el inventario de complementos 🫗")
+    except Exception as e:
         return render_template('Error.html', mensaje = f"Error {str(e)}")
 
 @heladeria_blueprint.route('/vender')
