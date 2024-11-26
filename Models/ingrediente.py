@@ -3,6 +3,7 @@ from sqlalchemy import text
 from funciones import *
 import decimal
 from sqlalchemy.ext.hybrid import hybrid_property
+from marshmallow import Schema, fields
 
 class Ingrediente(db.Model):
     __tablename__ = 'ingredientes'
@@ -10,14 +11,17 @@ class Ingrediente(db.Model):
     _nombre = db.Column("nombre", db.String(45), nullable = False)
     _precio = db.Column("precio", db.Integer, nullable = False)
     _calorias = db.Column("calorias", db.NUMERIC(5,2), nullable = False)
-    _vegetariano = db.Column("vegetariano", db.BOOLEAN, nullable = False)
+    _vegetariano = db.Column("vegetariano", db.Integer, nullable = False)
     _inventario = db.Column("inventario", db.NUMERIC(5,2), nullable = False)
     _tipo = db.Column("tipo", db.String(15), nullable = False)
     _sabor = db.Column("sabor", db.String(45), nullable = False)
 
     #Método que determina si un ingrediente es sano
     def es_sano(self) -> bool:
-        return es_sano_ingrediente(self.calorias, self.vegetariano)
+        vegetariano = False
+        if self.vegetariano==1:
+            vegetariano = True
+        return es_sano_ingrediente(self.calorias, vegetariano)
 
     # Método que permite abastecer un ingrediente
     def abastecer(self) -> None:
@@ -83,21 +87,21 @@ class Ingrediente(db.Model):
             raise ValueError('Expected decimal')
     
     @property
-    def vegetariano(self) -> bool:
+    def vegetariano(self) -> int:
         """ Devuelve el valor del atributo privado 'vegetariano' """
         return self._vegetariano
     
     @vegetariano.setter
-    def vegetariano(self, value:bool) -> None:
+    def vegetariano(self, value:int) -> None:
         """ 
         Establece un nuevo valor para el atributo privado 'vegetariano'
     
         Valida que el valor enviado corresponda al tipo de dato del atributo
         """ 
-        if isinstance(value, bool):
+        if isinstance(value, int):
             self._vegetariano = value
         else:
-            raise ValueError('Expected bool')
+            raise ValueError('Expected int')
         
     @property
     def inventario(self) -> decimal.Decimal:
@@ -149,3 +153,12 @@ class Ingrediente(db.Model):
             self._sabor = value
         else:
             raise ValueError('Expected str')
+        
+class IngredienteEsquema(Schema):
+    id = fields.Int(dump_only = True)
+    nombre = fields.Str()
+    precio = fields.Int()
+    calorias = fields.Float()
+    sabor = fields.Str()
+    vegetariano = fields.Bool()
+    tipo = fields.Str()

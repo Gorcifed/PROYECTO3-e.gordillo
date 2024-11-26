@@ -3,6 +3,8 @@ from flask_login import LoginManager, login_user, login_required
 from dotenv import load_dotenv
 from db import db
 from Controllers.controller_heladeria import *
+from Controllers.controller_producto_api import *
+from Controllers.controller_ingrediente_api import *
 from Models.ingrediente import Ingrediente
 from Models.producto import Producto
 from Models.heladeria import Heladeria
@@ -88,6 +90,8 @@ def logout():
     return redirect("/")
 
 app.register_blueprint(heladeria_blueprint)
+app.register_blueprint(api_producto_blueprint)
+app.register_blueprint(api_ingrediente_blueprint)
 
 if __name__ == '__main__':
     app.run(debug=True)

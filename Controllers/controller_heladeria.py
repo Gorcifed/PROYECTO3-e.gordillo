@@ -1,8 +1,5 @@
 from flask import Blueprint, render_template, current_app
 from flask_login import login_required, current_user
-from Models.ingrediente import Ingrediente
-from Models.producto import Producto
-from Models.heladeria import Heladeria
 
 heladeria_blueprint = Blueprint('heladeria_bp', __name__, url_prefix="/")
 

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `heladeria` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `heladeria`;
 -- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: heladeria
@@ -29,7 +27,7 @@ CREATE TABLE `ingredientes` (
   `nombre` varchar(45) DEFAULT NULL,
   `precio` int NOT NULL,
   `calorias` decimal(5,2) NOT NULL,
-  `vegetariano` bit(1) NOT NULL,
+  `vegetariano` int NOT NULL,
   `inventario` decimal(5,2) NOT NULL,
   `tipo` varchar(15) NOT NULL,
   `sabor` varchar(45) NOT NULL,
@@ -44,7 +42,7 @@ CREATE TABLE `ingredientes` (
 
 LOCK TABLES `ingredientes` WRITE;
 /*!40000 ALTER TABLE `ingredientes` DISABLE KEYS */;
-INSERT INTO `ingredientes` VALUES (1,'Helado de fresa',1500,50.00,_binary '\0',1.00,'Base','Fresa'),(2,'Chispas de chocolate',2500,80.00,_binary '\0',0.80,'Base','Chocolate'),(3,'Maní sin dulce',1200,10.00,_binary '',20.00,'Complemento','Maní'),(4,'Helado de vainilla',1300,48.00,_binary '\0',0.20,'Base','Vainilla'),(5,'Helado de chocolate',1800,120.00,_binary '\0',0.60,'Base','Chocolate'),(6,'Cereales',500,10.00,_binary '',1.20,'Base','Maíz'),(7,'Frutas varias',900,25.00,_binary '',5.00,'Complemento','Frutas varias'),(8,'Chispas de colores',1000,52.00,_binary '',5.00,'Complemento','Dulce'),(9,'Crema de leche',1500,400.00,_binary '\0',10.00,'Complemento','Leche'),(10,'Crema chantilly',3000,200.00,_binary '\0',5.00,'Complemento','Crema');
+INSERT INTO `ingredientes` VALUES (1,'Helado de fresa',1500,50.00,0,1.00,'Base','Fresa'),(2,'Chispas de chocolate',2500,80.00,0,0.80,'Base','Chocolate'),(3,'Maní sin dulce',1200,10.00,1,20.00,'Complemento','Maní'),(4,'Helado de vainilla',1300,48.00,0,0.20,'Base','Vainilla'),(5,'Helado de chocolate',1800,120.00,0,0.60,'Base','Chocolate'),(6,'Cereales',500,10.00,1,1.20,'Base','Maíz'),(7,'Frutas varias',900,25.00,1,5.00,'Complemento','Frutas varias'),(8,'Chispas de colores',1000,52.00,1,5.00,'Complemento','Dulce'),(9,'Crema de leche',1500,400.00,0,10.00,'Complemento','Leche'),(10,'Crema chantilly',3000,200.00,0,5.00,'Complemento','Crema');
 /*!40000 ALTER TABLE `ingredientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,4 +120,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-25 21:37:31
+-- Dump completed on 2024-11-26 17:47:20

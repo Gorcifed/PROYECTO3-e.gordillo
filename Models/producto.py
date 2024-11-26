@@ -3,6 +3,7 @@ from sqlalchemy import text, ForeignKey
 from funciones import *
 from Models.ingrediente import Ingrediente
 from sqlalchemy.ext.hybrid import hybrid_property
+from marshmallow import Schema, fields
 
 # Clase que representa el producto
 class Producto(db.Model):
@@ -72,6 +73,16 @@ class Producto(db.Model):
                 if ingrediente.inventario < .2:
                     return ingrediente
         return None
+
+    # Método que permite abastecer el inventario de ingredientes
+    def abastecer_inventario(self):
+        for ingrediente in self.ingredientes:
+            ingrediente.abastecer()
+
+    # Método que permite renovar el inventario de ingredientes
+    def renovar_inventario(self):
+        for ingrediente in self.ingredientes:
+            ingrediente.renovar_inventario()
 
     @hybrid_property
     def nombre(self) -> str:
@@ -174,3 +185,9 @@ class Producto(db.Model):
             self._precio_ventas_dia = value
         else:
             raise ValueError('Expected int')
+
+class ProductoEsquema(Schema):
+    id = fields.Int(dump_only = True)
+    nombre = fields.Str()
+    precio = fields.Int()
+    tipo = fields.Str()
