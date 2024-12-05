@@ -25,6 +25,3 @@ En este repositorio encontrará el código fuente y recursos necesarios para eje
 ### Diagrama
 
 ![ci](SQL-Resources/DataBaseDiagram.png)
-
-
-Sitio en Railway [https://proyecto4egordillo-production.up.railway.app](https://proyecto4egordillo-production.up.railway.app/)
